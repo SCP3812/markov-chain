@@ -5,8 +5,32 @@ corpusium = open("corpus.txt", "r")
 corpus = corpusium.read()
 corpusium.close()
 
-def transition_matrix(corpus_words):
-    pass
+def convertToSparseMatrix(matrix):
+  
+    # creating an empty sparse 
+    # matrix list
+    sparseMatrix =[]
+  
+    # searching values greater 
+    # than zero
+    for i in range(len(matrix)):
+        for j in range(len(matrix[0])):
+            if matrix[i][j] != 0 :
+  
+                # creating a temporary
+                # sublist
+                temp = []
+  
+                # appending row value, column 
+                # value and element into the 
+                # sublist 
+                temp.append(i)
+                temp.append(j)
+                temp.append(matrix[i][j])
+  
+                # appending the sublist into
+                # the sparse matrix list
+                sparseMatrix.append(temp)
 
 def Markovian(markov): 
     markov_chain = {}
