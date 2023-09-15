@@ -1,62 +1,35 @@
-#code by Striking Loo under idfuckingk liscense https://gist.github.com/StrikingLoo
+#code partially adapted from Striking Loo under idfuckingk liscense https://gist.github.com/StrikingLoo
+import random
 
-corpus = ""
-file_name = ["corpus.txt"]
-for file_name in file_names:
-    with open(file_name, 'r') as f:
-            corpus+=f.read()
-corpus = corpus.replace('\n',' ')
-corpus = corpus.replace('\t',' ')
-corpus = corpus.replace('“', ' " ')
-corpus = corpus.replace('”', ' " ')
-for spaced in ['.','-',',','!','?','(','—',')']:
-    corpus = corpus.replace(spaced, ' {0} '.format(spaced))
-len(corpus) 
+corpusium = open("corpus.txt", "r")
+corpus = corpusium.read()
+corpusium.close()
 
-corpus_words = corpus.split(' ')
-corpus_words= [word for word in corpus_words if word != '']
-corpus_words # [...'a', 'wyvern', ',', 'two', 'of', 'the', 'thousand'...]
-len(corpus_words) # 2185920
+def Markovian(markov): 
+    markov_chain = {}
+    markov_list = markov.split(" ")
 
-distinct_words = list(set(corpus_words))
-word_idx_dict = {word: i for i, word in enumerate(distinct_words)}
-distinct_words_count = len(list(set(corpus_words)))
-distinct_words_count
+    n=0
+    while n < len(markov_list)-1:
+        word = markov_list[n].lower().replace('\W+', "")
+        if not word in markov_chain.keys():
+            markov_chain[word] = []
+        if markov_list[n+1]:
+            markov_chain[word].append(markov_list[n+1])
+        n = n + 1 
+    print(markov_chain)
+    words = list(markov_chain.keys())
+    word = words[random.randint(0, len(words)-1)]
+    result = ""
 
-k = 1 # adjustable
-sets_of_k_words = [ ' '.join(corpus_words[i:i+k]) for i, _ in enumerate(corpus_words[:-k]) ]
+    for i in words:
+        result = result + word + " "
+        newWord = markov_chain[word][random.randint(0, len(markov_chain[word])-1)]
+        word = newWord
 
-from scipy.sparse import dok_matrix
+        if not word or not word in markov_chain:
+            word = words[random.randint(0, len(words)-1)]
+    return result
 
-sets_count = len(list(set(sets_of_k_words)))
-next_after_k_words_matrix = dok_matrix((sets_count, len(distinct_words)))
-
-distinct_sets_of_k_words = list(set(sets_of_k_words))
-k_words_idx_dict = {word: i for i, word in enumerate(distinct_sets_of_k_words)}
-
-for i, word in enumerate(sets_of_k_words[:-k]):
-
-    word_sequence_idx = k_words_idx_dict[word]
-    next_word_idx = word_idx_dict[corpus_words[i+k]]
-    next_after_k_words_matrix[word_sequence_idx, next_word_idx] +=1
-
-def sample_next_word_after_sequence(word_sequence, alpha = 0):
-    next_word_vector = next_after_k_words_matrix[k_words_idx_dict[word_sequence]] + alpha
-    likelihoods = next_word_vector/next_word_vector.sum()
-    
-    return weighted_choice(distinct_words, likelihoods.toarray())
-    
-def stochastic_chain(seed, chain_length=15, seed_length=2):
-    current_words = seed.split(' ')
-    if len(current_words) != seed_length:
-        raise ValueError(f'wrong number of words, expected {seed_length}')
-    sentence = seed
-
-    for _ in range(chain_length):
-        sentence+=' '
-        next_word = sample_next_word_after_sequence(' '.join(current_words))
-        sentence+=next_word
-        current_words = current_words[1:]+[next_word]
-    return sentence
 # example use    
-stochastic_chain('the world')
+print(Markovian(corpus))
