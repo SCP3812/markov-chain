@@ -17,7 +17,6 @@ def Markovian(markov):
         if markov_list[n+1]:
             markov_chain[word].append(markov_list[n+1])
         n = n + 1 
-    print(markov_chain)
     words = list(markov_chain.keys())
     word = words[random.randint(0, len(words)-1)]
     result = ""
