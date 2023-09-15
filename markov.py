@@ -1,6 +1,7 @@
 #code by Striking Loo under idfuckingk liscense https://gist.github.com/StrikingLoo
 
 corpus = ""
+file_name = ["corpus.txt"]
 for file_name in file_names:
     with open(file_name, 'r') as f:
             corpus+=f.read()
@@ -22,7 +23,7 @@ word_idx_dict = {word: i for i, word in enumerate(distinct_words)}
 distinct_words_count = len(list(set(corpus_words)))
 distinct_words_count
 
-k = 2 # adjustable
+k = 1 # adjustable
 sets_of_k_words = [ ' '.join(corpus_words[i:i+k]) for i, _ in enumerate(corpus_words[:-k]) ]
 
 from scipy.sparse import dok_matrix
