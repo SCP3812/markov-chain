@@ -18,6 +18,10 @@ def Markovian(markov):
             markov_chain[word].append(markov_list[n+1])
         n = n + 1 
     words = list(markov_chain.keys())
+    distinct_words = list(set(words))
+    word_index_dict = {word: i for i, word in enumerate(distinct_words)}
+    distinct_words_count = len(list(set(words)))
+    print(distinct_words_count)
     word = words[random.randint(0, len(words)-1)]
     result = ""
 
