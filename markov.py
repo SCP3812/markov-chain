@@ -5,33 +5,6 @@ corpusium = open("corpus.txt", "r")
 corpus = corpusium.read()
 corpusium.close()
 
-def convertToSparseMatrix(matrix):
-  
-    # creating an empty sparse 
-    # matrix list
-    sparseMatrix =[]
-  
-    # searching values greater 
-    # than zero
-    for i in range(len(matrix)):
-        for j in range(len(matrix[0])):
-            if matrix[i][j] != 0 :
-  
-                # creating a temporary
-                # sublist
-                temp = []
-  
-                # appending row value, column 
-                # value and element into the 
-                # sublist 
-                temp.append(i)
-                temp.append(j)
-                temp.append(matrix[i][j])
-  
-                # appending the sublist into
-                # the sparse matrix list
-                sparseMatrix.append(temp)
-
 def Markovian(markov): 
     markov_chain = {}
     markov_list = markov.split(" ")
@@ -51,6 +24,8 @@ def Markovian(markov):
     k = 2
     sets_of_k_words = [ ' '.join(words[i:i+k]) for i, _ in enumerate(words[:-k]) ]
     sets_count = len(list(set(sets_of_k_words)))
+    print(sets_of_k_words)
+
     word = words[random.randint(0, len(words)-1)]
     result = ""
 
@@ -62,6 +37,25 @@ def Markovian(markov):
         if not word or not word in markov_chain:
             word = words[random.randint(0, len(words)-1)]
     return result
+
+    def sample_next_word_after_sequence(word_sequence, alpha = 0):
+        next_word_vector = next_after_k_words_matrix[k_words_idx_dict[word_sequence]] + alpha
+        likelihoods = next_word_vector/next_word_vector.sum()
+    
+        return weighted_choice(distinct_words, likelihoods.toarray())
+
+    def stochastic_chain(seed, chain_length=15, seed_length=2):
+        current_words = seed.split(' ')
+        if len(current_words) != seed_length:
+            raise ValueError(f'wrong number of words, expected {seed_length}')
+            sentence = seed
+
+        for _ in range(chain_length):
+            sentence+=' '
+            next_word = sample_next_word_after_sequence(' '.join(current_words))
+            sentence+=next_word
+            current_words = current_words[1:]+[next_word]
+    return sentence
 
 # example use    
 print(Markovian(corpus))
