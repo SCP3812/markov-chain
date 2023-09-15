@@ -5,6 +5,9 @@ corpusium = open("corpus.txt", "r")
 corpus = corpusium.read()
 corpusium.close()
 
+def transition_matrix(corpus_words):
+    pass
+
 def Markovian(markov): 
     markov_chain = {}
     markov_list = markov.split(" ")
@@ -21,7 +24,9 @@ def Markovian(markov):
     distinct_words = list(set(words))
     word_index_dict = {word: i for i, word in enumerate(distinct_words)}
     distinct_words_count = len(list(set(words)))
-    print(distinct_words_count)
+    k = 2
+    sets_of_k_words = [ ' '.join(words[i:i+k]) for i, _ in enumerate(words[:-k]) ]
+    print(sets_of_k_words)
     word = words[random.randint(0, len(words)-1)]
     result = ""
 
