@@ -26,7 +26,7 @@ def Markovian(markov):
     distinct_words_count = len(list(set(words)))
     k = 2
     sets_of_k_words = [ ' '.join(words[i:i+k]) for i, _ in enumerate(words[:-k]) ]
-    print(sets_of_k_words)
+    sets_count = len(list(set(sets_of_k_words)))
     word = words[random.randint(0, len(words)-1)]
     result = ""
 
