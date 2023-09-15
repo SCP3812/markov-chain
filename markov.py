@@ -5,6 +5,18 @@ corpusium = open("corpus.txt", "r")
 corpus = corpusium.read()
 corpusium.close()
 
+def stochastic_matrix(rows, columns):
+    matrix = []
+    i = 0
+    while i < rows:
+        n = 0
+        matrix.append(matrix)
+        i = i + 1
+        while n < columns:
+            matrix[n].append([])
+            n = n + 1
+
+
 def Markovian(markov): 
     markov_chain = {}
     markov_list = markov.split(" ")
@@ -26,8 +38,9 @@ def Markovian(markov):
     sets_count = len(list(set(sets_of_k_words)))
     print(sets_count)
     print(len(distinct_words))
-    next_after_k_words_matrix = [[column for column in range(sets_count)] for row in range(len(distinct_words))]
-    
+    next_after_k_words_matrix = stochastic_matrix(sets_count, len(distinct_words))
+    print(next_after_k_words_matrix)
+
     distinct_sets_of_k_words = list(set(sets_of_k_words))
     k_words_idx_dict = {word: i for i, word in enumerate(distinct_sets_of_k_words)}
 
