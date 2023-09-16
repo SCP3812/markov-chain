@@ -1,10 +1,6 @@
 #code partially adapted from Striking Loo under idfuckingk liscense https://gist.github.com/StrikingLoo
 import random
 
-corpusium = open("corpus.txt", "r")
-corpus = corpusium.read()
-corpusium.close()
-
 def stochastic_matrix(rows, columns):
     shell = []
     matrix = []
@@ -17,22 +13,7 @@ def stochastic_matrix(rows, columns):
     return matrix
 
 
-def Markovian(markov): 
-    markov_chain = {}
-    markov_list = markov.split(" ")
-
-    n=0
-    while n < len(markov_list)-1:
-        word = markov_list[n].lower().replace('\W+', "")
-        if not word in markov_chain.keys():
-            markov_chain[word] = []
-        if markov_list[n+1]:
-            markov_chain[word].append(markov_list[n+1])
-        n = n + 1 
-    words = list(markov_chain.keys())
-    distinct_words = list(set(words))
-    word_index_dict = {word: i for i, word in enumerate(distinct_words)}
-    distinct_words_count = len(list(set(words)))
+def Markovian(markov):  
     k = 2
     sets_of_k_words = [ ' '.join(words[i:i+k]) for i, _ in enumerate(words[:-k]) ]
     sets_count = len(list(set(sets_of_k_words)))
