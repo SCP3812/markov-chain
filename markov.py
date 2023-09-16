@@ -6,14 +6,15 @@ corpus = corpusium.read()
 corpusium.close()
 
 def stochastic_matrix(rows, columns):
+    shell = []
     matrix = []
     i = 0
     while i < rows:
         n = 0
-        matrix.append(matrix)
+        matrix.append(shell)
         i = i + 1
         while n < columns:
-            matrix[n].append([])
+            matrix[n].append(shell)
             n = n + 1
 
 
