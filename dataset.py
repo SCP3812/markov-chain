@@ -1,5 +1,7 @@
+from corpus import load_corpus
+
 markov_chain = {}
-markov_list = corpus.split(" ")
+markov_list = load_corpus("corpus.txt").split(" ")
 
 n=0
 while n < len(markov_list)-1:
