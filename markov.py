@@ -12,10 +12,9 @@ def stochastic_matrix(rows, columns):
     while i < rows:
         n = 0
         matrix.append(shell)
+        print(matrix[i])
         i = i + 1
-        while n < columns:
-            matrix[n].append(shell)
-            n = n + 1
+    return matrix
 
 
 def Markovian(markov): 
@@ -40,7 +39,6 @@ def Markovian(markov):
     print(sets_count)
     print(len(distinct_words))
     next_after_k_words_matrix = stochastic_matrix(sets_count, len(distinct_words))
-    print(next_after_k_words_matrix)
 
     distinct_sets_of_k_words = list(set(sets_of_k_words))
     k_words_idx_dict = {word: i for i, word in enumerate(distinct_sets_of_k_words)}
