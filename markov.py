@@ -2,18 +2,6 @@
 import random
 import dataset
 
-def stochastic_matrix(rows, columns):
-    shell = []
-    matrix = []
-    i = 0
-    while i < rows:
-        n = 0
-        matrix.append(shell)
-        print(matrix[i])
-        i = i + 1
-    return matrix
-
-
 def Markovian(markov):  
     k = 2
     sets_of_k_words = [ ' '.join(words[i:i+k]) for i, _ in enumerate(words[:-k]) ]
@@ -27,15 +15,6 @@ def Markovian(markov):
 
     word = words[random.randint(0, len(words)-1)]
     result = ""
-
-    for i in words:
-        result = result + word + " "
-        newWord = markov_chain[word][random.randint(0, len(markov_chain[word])-1)]
-        word = newWord
-
-        if not word or not word in markov_chain:
-            word = words[random.randint(0, len(words)-1)]
-    return result
 
 def sample_next_word_after_sequence(word_sequence, alpha = 0):
     next_word_vector = next_after_k_words_matrix[k_words_idx_dict[word_sequence]] + alpha
