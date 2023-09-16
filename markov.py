@@ -1,5 +1,6 @@
 #code partially adapted from Striking Loo under idfuckingk liscense https://gist.github.com/StrikingLoo
 import random
+import dataset
 
 def stochastic_matrix(rows, columns):
     shell = []
@@ -56,4 +57,4 @@ def stochastic_chain(seed, chain_length=15, seed_length=2):
     return sentence
 
 # example use    
-print(Markovian(corpus))
+print(Markovian())
