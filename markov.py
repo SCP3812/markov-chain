@@ -1,20 +1,11 @@
 #code partially adapted from Striking Loo under idfuckingk liscense https://gist.github.com/StrikingLoo
 import random
-import dataset
+from dataset import dataset_init
+from init_matrix import initialize_matrix
 
-def Markovian(markov):  
-    k = 2
-    sets_of_k_words = [ ' '.join(words[i:i+k]) for i, _ in enumerate(words[:-k]) ]
-    sets_count = len(list(set(sets_of_k_words)))
-    print(sets_count)
-    print(len(distinct_words))
-    next_after_k_words_matrix = stochastic_matrix(sets_count, len(distinct_words))
-
-    distinct_sets_of_k_words = list(set(sets_of_k_words))
-    k_words_idx_dict = {word: i for i, word in enumerate(distinct_sets_of_k_words)}
-
-    word = words[random.randint(0, len(words)-1)]
-    result = ""
+markov_list = dataset_init()
+distinct_words = list(set(markov_list))
+next_after_k_words_matrix = initialize_matrix(markov_list, distinct_words)
 
 def sample_next_word_after_sequence(word_sequence, alpha = 0):
     next_word_vector = next_after_k_words_matrix[k_words_idx_dict[word_sequence]] + alpha
@@ -36,4 +27,4 @@ def stochastic_chain(seed, chain_length=15, seed_length=2):
     return sentence
 
 # example use    
-print(Markovian())
+stochastic_chain("the world")

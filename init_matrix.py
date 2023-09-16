@@ -18,11 +18,10 @@ def initialize_matrix(words, distinct_words):
     distinct_sets_of_k_words = list(set(sets_of_k_words))
     k_words_index_dict = {word: i for i, word in enumerate(distinct_sets_of_k_words)}
 
-    word = words[random.randint(0, len(words)-1)]
-
     for i, word in enumerate(sets_of_k_words[:-k]):
 
         word_sequence_idx = k_words_index_dict[word]
-        next_word_idx = word_index_dict[corpus_words[i+k]]
-        next_after_k_words_matrix[word_sequence_idx, next_word_idx] +=1
+        next_word_idx = word_index_dict[words[i+k]]
+        next_after_k_words_matrix[word_sequence_idx][next_word_idx] +=1
+    return next_after_k_words_matrix
     
