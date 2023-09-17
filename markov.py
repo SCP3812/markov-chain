@@ -33,5 +33,8 @@ def stochastic_chain(seed, chain_length, seed_length):
         current_words = current_words[1:]+next_word
     return sentence
 
-# example use    
-print(stochastic_chain("the", 100, 1))
+# example use
+i = 0
+while i < 3:  
+    print(stochastic_chain("And I", 150, 2))
+    i = i + 1
