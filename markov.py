@@ -5,26 +5,31 @@ from init_matrix import initialize_matrix
 
 markov_list = dataset_init()
 distinct_words = list(set(markov_list))
-next_after_k_words_matrix = initialize_matrix(markov_list, distinct_words)
+next_after_k_words_matrix, k_words_index_dict = initialize_matrix(markov_list, distinct_words)
 
-def sample_next_word_after_sequence(word_sequence, alpha = 0):
-    next_word_vector = next_after_k_words_matrix[k_words_idx_dict[word_sequence]] + alpha
-    likelihoods = next_word_vector/next_word_vector.sum()
+
+def sample_next_word_after_sequence(word_sequence, alpha):
+    next_word_vector = next_after_k_words_matrix[k_words_index_dict[word_sequence]]
+    likelihoods = []
+    for word in next_word_vector:
+        likelihood = word/sum(next_word_vector)
+        likelihoods.append(likelihood)
     
-    return weighted_choice(distinct_words, likelihoods.toarray())
+    return random.choices(distinct_words, weights=likelihoods)
 
-def stochastic_chain(seed, chain_length=15, seed_length=2):
+def stochastic_chain(seed, chain_length, seed_length):
     current_words = seed.split(' ')
     if len(current_words) != seed_length:
         raise ValueError(f'wrong number of words, expected {seed_length}')
-        sentence = seed
+    sentence = seed
 
     for _ in range(chain_length):
-        sentence+=' '
-        next_word = sample_next_word_after_sequence(' '.join(current_words))
-        sentence+=next_word
+        sentence = sentence + ' '
+        next_word = sample_next_word_after_sequence(' '.join(current_words), 0)
+        print(next_word)
+        sentence = sentence + str(next_word)
         current_words = current_words[1:]+[next_word]
     return sentence
 
 # example use    
-stochastic_chain("the world")
+stochastic_chain("lead to", 15, 2)

@@ -1,4 +1,8 @@
-import dataset
+from dataset import dataset_init
+
+markov_list = dataset_init()
+distinct_words = list(set(markov_list))
+word_index_dict = {word: i for i, word in enumerate(distinct_words)}
 
 def stochastic_matrix(rows, columns):
     matrix = []
@@ -6,7 +10,7 @@ def stochastic_matrix(rows, columns):
         a = []
         for column in range(columns):
             a.append(0)
-    matrix.append(a)
+        matrix.append(a)
     return matrix
 
 def initialize_matrix(words, distinct_words):
@@ -17,11 +21,11 @@ def initialize_matrix(words, distinct_words):
 
     distinct_sets_of_k_words = list(set(sets_of_k_words))
     k_words_index_dict = {word: i for i, word in enumerate(distinct_sets_of_k_words)}
+    print(len(next_after_k_words_matrix))
 
     for i, word in enumerate(sets_of_k_words[:-k]):
 
         word_sequence_idx = k_words_index_dict[word]
         next_word_idx = word_index_dict[words[i+k]]
         next_after_k_words_matrix[word_sequence_idx][next_word_idx] +=1
-    return next_after_k_words_matrix
-    
+    return next_after_k_words_matrix, k_words_index_dict
