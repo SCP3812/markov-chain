@@ -22,14 +22,13 @@ def stochastic_chain(seed, chain_length, seed_length):
     if len(current_words) != seed_length:
         raise ValueError(f'wrong number of words, expected {seed_length}')
     sentence = seed
-
+    
     for _ in range(chain_length):
-        sentence = sentence + ' '
+        sentence+=' '
         next_word = sample_next_word_after_sequence(' '.join(current_words), 0)
-        print(next_word)
-        sentence = sentence + str(next_word)
-        current_words = current_words[1:]+[next_word]
+        sentence = sentence + next_word[0]
+        current_words = current_words[1:]+next_word
     return sentence
 
 # example use    
-stochastic_chain("lead to", 15, 2)
+print(stochastic_chain("lead to", 15, 2))
