@@ -9,7 +9,10 @@ next_after_k_words_matrix, k_words_index_dict = initialize_matrix(markov_list, d
 
 
 def sample_next_word_after_sequence(word_sequence, alpha):
-    next_word_vector = next_after_k_words_matrix[k_words_index_dict[word_sequence]]
+    next_word_vector = []
+    for num in next_after_k_words_matrix[k_words_index_dict[word_sequence]]:
+        num = num + alpha
+        next_word_vector.append(num)
     likelihoods = []
     for word in next_word_vector:
         likelihood = word/sum(next_word_vector)
@@ -31,4 +34,4 @@ def stochastic_chain(seed, chain_length, seed_length):
     return sentence
 
 # example use    
-print(stochastic_chain("lead to", 15, 2))
+print(stochastic_chain("the", 100, 1))
