@@ -42,5 +42,5 @@ def stochastic_chain(seed, chain_length, seed_length):
 # example use
 i = 0
 while i < 3:  
-    print(stochastic_chain("my father", 300, 2))
+    print(stochastic_chain("tartars that ", 300, 2))
     i = i + 1
