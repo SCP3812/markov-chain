@@ -7,12 +7,18 @@ markov_list = dataset_init()
 distinct_words = list(set(markov_list))
 next_after_k_words_matrix, k_words_index_dict = initialize_matrix(markov_list, distinct_words)
 
-
 def sample_next_word_after_sequence(word_sequence, alpha):
-    next_word_vector = []
+    next_word_vector = [] 
     for num in next_after_k_words_matrix[k_words_index_dict[word_sequence]]:
         num = num + alpha
         next_word_vector.append(num)
+
+    if sum(next_word_vector) == 0:
+        print(word_sequence)
+        #print(next_after_k_words_matrix[k_words_index_dict[word_sequence]])
+        #print(k_words_index_dict)
+        #print(k_words_index_dict.get("reality"))
+
     likelihoods = []
     for word in next_word_vector:
         likelihood = word/sum(next_word_vector)
@@ -36,5 +42,5 @@ def stochastic_chain(seed, chain_length, seed_length):
 # example use
 i = 0
 while i < 3:  
-    print(stochastic_chain("lovers of", 150, 2))
+    print(stochastic_chain("2", 150, 1))
     i = i + 1
