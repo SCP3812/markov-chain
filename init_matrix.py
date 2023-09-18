@@ -14,7 +14,7 @@ def stochastic_matrix(rows, columns):
     return matrix
 
 def initialize_matrix(words, distinct_words):
-    k = 1
+    k = 2
     sets_of_k_words = [ ' '.join(words[i:i+k]) for i, _ in enumerate(words[:-k]) ]
     sets_count = len(list(set(sets_of_k_words)))
     next_after_k_words_matrix = stochastic_matrix(sets_count, len(distinct_words))
