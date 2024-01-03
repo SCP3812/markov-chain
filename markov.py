@@ -9,6 +9,13 @@ next_after_k_words_matrix, k_words_index_dict = initialize_matrix(markov_list, d
 
 def sample_next_word_after_sequence(word_sequence, alpha):
     next_word_vector = [] 
+    if word_sequence not in k_words_index_dict:
+            a = []
+            k_words_index_dict[word_sequence] = k_words_index_dict[list(k_words_index_dict.keys())[-1]] + 1
+            for column in range(len(distinct_words)):
+                a.append(0)
+            next_after_k_words_matrix.append(a)
+            
     for num in next_after_k_words_matrix[k_words_index_dict[word_sequence]]:
         num = num + alpha
         next_word_vector.append(num)
@@ -34,7 +41,7 @@ def stochastic_chain(seed, chain_length, seed_length):
     
     for _ in range(chain_length):
         sentence+=' '
-        next_word = sample_next_word_after_sequence(' '.join(current_words), 0)
+        next_word = sample_next_word_after_sequence(' '.join(current_words), 0.0001)
         sentence = sentence + next_word[0]
         current_words = current_words[1:]+next_word
     return sentence
@@ -42,5 +49,5 @@ def stochastic_chain(seed, chain_length, seed_length):
 # example use
 i = 0
 while i < 3:  
-    print(stochastic_chain("my father", 300, 2))
+    print(stochastic_chain("my father is", 150, 3))
     i = i + 1

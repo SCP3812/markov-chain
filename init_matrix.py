@@ -14,11 +14,11 @@ def stochastic_matrix(rows, columns):
     return matrix
 
 def initialize_matrix(words, distinct_words):
-    k = 2
+    k = 3
     sets_of_k_words = [ ' '.join(words[i:i+k]) for i, _ in enumerate(words[:-k]) ]
     sets_count = len(list(set(sets_of_k_words)))
     next_after_k_words_matrix = stochastic_matrix(sets_count, len(distinct_words))
-
+    
     distinct_sets_of_k_words = list(set(sets_of_k_words))
     k_words_index_dict = {word: i for i, word in enumerate(distinct_sets_of_k_words)}
 
