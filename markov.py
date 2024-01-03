@@ -1,30 +1,41 @@
 #code partially adapted from Striking Loo under idfuckingk liscense https://gist.github.com/StrikingLoo
-import random
 from dataset import dataset_init
 from init_matrix import initialize_matrix
+from scipy.sparse import dok_matrix, vstack
+import numpy as np
+import random
+from random import random 
+
+def weighted_choice(objects, weights):
+    """ returns randomly an element from the sequence of 'objects', 
+        the likelihood of the objects is weighted according 
+        to the sequence of 'weights', i.e. percentages."""
+
+    weights = np.array(weights, dtype=np.float64)
+    sum_of_weights = weights.sum()
+    # standardization:
+    np.multiply(weights, 1 / sum_of_weights, weights)
+    weights = weights.cumsum()
+    x = random()
+    for i in range(len(weights)):
+        if x < weights[i]:
+            return objects[i]
 
 markov_list = dataset_init()
 distinct_words = list(set(markov_list))
-next_after_k_words_matrix, k_words_index_dict = initialize_matrix(markov_list, distinct_words)
+next_after_k_words_matrix, k_words_idx_dict = initialize_matrix(markov_list, distinct_words)
 
 def sample_next_word_after_sequence(word_sequence, alpha):
-    next_word_vector = [] 
-    for num in next_after_k_words_matrix[k_words_index_dict[word_sequence]]:
-        num = num + alpha
-        next_word_vector.append(num)
-
-    if sum(next_word_vector) == 0:
-        print(word_sequence)
-        #print(next_after_k_words_matrix[k_words_index_dict[word_sequence]])
-        #print(k_words_index_dict)
-        #print(k_words_index_dict.get("reality"))
-
-    likelihoods = []
-    for word in next_word_vector:
-        likelihood = word/sum(next_word_vector)
-        likelihoods.append(likelihood)
+    if word_sequence not in k_words_idx_dict:
+        print("shit")
+        a = dok_matrix((1, len(distinct_words)))
+        k_words_idx_dict[word_sequence] = k_words_idx_dict[list(k_words_idx_dict.keys())[-1]] + 1
+        next_after_k_words_matrix = stack(next_after_k_words_matrix, a)
+        print(next_after_k_words_matrix)
+    next_word_vector = next_after_k_words_matrix[k_words_idx_dict[word_sequence]] + alpha
+    likelihoods = next_word_vector/next_word_vector.sum()
     
-    return random.choices(distinct_words, weights=likelihoods)
+    return weighted_choice(distinct_words, likelihoods.toarray())
 
 def stochastic_chain(seed, chain_length, seed_length):
     current_words = seed.split(' ')
@@ -34,13 +45,13 @@ def stochastic_chain(seed, chain_length, seed_length):
     
     for _ in range(chain_length):
         sentence+=' '
-        next_word = sample_next_word_after_sequence(' '.join(current_words), 0.0000002)
-        sentence = sentence + next_word[0]
-        current_words = current_words[1:]+next_word
+        next_word = sample_next_word_after_sequence(' '.join(current_words), 0.1)
+        sentence+=next_word
+        current_words = current_words[1:]+[next_word]
     return sentence
 
 # example use
 i = 0
 while i < 3:  
-    print(stochastic_chain("the uncanny", 300, 2))
+    print(stochastic_chain("my father is", 300, 3))
     i = i + 1
