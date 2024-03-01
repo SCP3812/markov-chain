@@ -41,7 +41,7 @@ def stochastic_chain(seed, chain_length, seed_length):
     
     for _ in range(chain_length):
         sentence+=' '
-        next_word = sample_next_word_after_sequence(' '.join(current_words), 0.0001)
+        next_word = sample_next_word_after_sequence(' '.join(current_words), 0.00001)
         sentence = sentence + next_word[0]
         current_words = current_words[1:]+next_word
     return sentence
@@ -49,5 +49,5 @@ def stochastic_chain(seed, chain_length, seed_length):
 # example use
 i = 0
 while i < 3:  
-    print(stochastic_chain("my father is", 150, 3))
+    print(stochastic_chain("un-touchable felon gangster", 300, 3))
     i = i + 1
